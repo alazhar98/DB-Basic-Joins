@@ -1,17 +1,13 @@
 use company;
 
 /* Find Employee and Their Department Name */
-SELECT e.name AS employee_name, (SELECT d.department_name 
-     FROM departments d 
-     WHERE d.department_id = e.department_id) AS department_name
-FROM employees e;
-
+SELECT employees.name, departments.department_id
+     FROM departments ,employees
+	 where employees.department_id = departments.department_id
 /* List Projects and Their Department Locations */
-SELECT p.project_name,(SELECT d.location 
-     FROM departments d 
-     WHERE d.department_id = p.department_id) AS department_location
-FROM projects p;
-
+select projects.project_name , departments.location
+from projects,departments
+where projects.department_id=departments.department_id;
 
 /* Find Employees Without Departments */
 
@@ -21,7 +17,7 @@ WHERE department_id IS NULL;
 
 
 /*List All Projects and Assigned Departments */
-SELECT  p.project_name, (SELECT d.department_name 
-	FROM departments d 
-     WHERE d.department_id = p.department_id) AS department_name
-FROM projects p;
+SELECT projects.project_name , departments.department_name 
+	FROM projects,departments
+     WHERE projects.department_id = departments.department_id;
+
