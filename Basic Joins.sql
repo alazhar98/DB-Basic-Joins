@@ -1,24 +1,27 @@
 use company;
 
 /* Find Employee and Their Department Name */
-select employees.name,department_name
-from employees
-cross join departments;
+SELECT e.name AS employee_name, (SELECT d.department_name 
+     FROM departments d 
+     WHERE d.department_id = e.department_id) AS department_name
+FROM employees e;
 
 /* List Projects and Their Department Locations */
-select projects.project_name,departments.location
-from projects
-cross join departments;
+SELECT p.project_name,(SELECT d.location 
+     FROM departments d 
+     WHERE d.department_id = p.department_id) AS department_location
+FROM projects p;
+
 
 /* Find Employees Without Departments */
 
-select name , department_name
-from employees e
-left join departments d
-on e.name = d.department_name
-where d.department_name = null;
+SELECT name AS employee_name
+FROM employees
+WHERE department_id IS NULL;
+
 
 /*List All Projects and Assigned Departments */
-select projects.project_name,departments.department_name
-from projects
-cross join departments;
+SELECT  p.project_name, (SELECT d.department_name 
+	FROM departments d 
+     WHERE d.department_id = p.department_id) AS department_name
+FROM projects p;
